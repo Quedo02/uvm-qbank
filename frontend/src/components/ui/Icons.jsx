@@ -1,0 +1,7 @@
+export const IcUser = (p)=>(<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...p}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>);
+export const IcDashboard = (p)=>(<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...p}><path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"/></svg>);
+export const IcQuestion = (p)=>(<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...p}><path d="M9 9a3 3 0 116 0c0 2-3 2-3 4"/><circle cx="12" cy="18" r="1"/></svg>);
+export const IcExam = (p)=>(<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...p}><path d="M16 2v4M8 2v4M4 8h16M5 12h14M5 16h10"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>);
+export const IcClass = (p)=>(<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...p}><path d="M3 7h18M7 7v12M17 7v12M3 19h18"/><circle cx="12" cy="11" r="2"/></svg>);
+export const IcLogout = (p)=>(<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...p}><path d="M15 3h4v18h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>);
+export const IcMicrosoft = (p)=>(<svg width="18" height="18" viewBox="0 0 23 23" {...p}><rect width="10" height="10" x="1" y="1" fill="#f35325"/><rect width="10" height="10" x="12" y="1" fill="#81bc06"/><rect width="10" height="10" x="1" y="12" fill="#05a6f0"/><rect width="10" height="10" x="12" y="12" fill="#ffba08"/></svg>);

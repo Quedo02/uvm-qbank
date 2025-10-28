@@ -1,0 +1,31 @@
+# Node/JS
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Frontend builds
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+*.cache
+
+# Backend builds
+backend/dist/
+backend/.cache/
+
+# Env y credenciales
+.env
+backend/.env
+frontend/.env
+
+# Sistema / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dumps y artefactos
+*.sql
+*.sqlite
+coverage/

@@ -1,0 +1,182 @@
+/* ===== Paleta base (UVM) ===== */
+:root{
+  --uvm-red: #cc0000;
+  --uvm-red-600: #b30000;
+  --uvm-red-700: #930000;
+
+  /* Forzamos el primary global para que todo lo "primary" sea rojo */
+  --bs-primary: var(--uvm-red);
+  --bs-primary-rgb: 204, 0, 0;
+  --ink: #141618; /* gris muy oscuro p/ texto */
+
+  --sk-base: #f4f6f9;        /* base (perlado) */
+  --sk-shadow: #eceff5;      /* sombra sutil */
+  --sk-highlight: #ffffff;   /* destello */
+}
+
+/* ===== Botón primario SIEMPRE rojo (incluyendo disabled) ===== */
+.btn-primary{
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--uvm-red);
+  --bs-btn-border-color: var(--uvm-red);
+  --bs-btn-hover-bg: var(--uvm-red-600);
+  --bs-btn-hover-border-color: var(--uvm-red-600);
+  --bs-btn-active-bg: var(--uvm-red-700);
+  --bs-btn-active-border-color: var(--uvm-red-700);
+
+  /* estados disabled: evita "volver a azul" al hacer loading */
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--uvm-red);
+  --bs-btn-disabled-border-color: var(--uvm-red);
+  --bs-btn-disabled-opacity: .65;
+}
+
+/* ===== Botón outline (Microsoft) en ROJO ===== */
+.btn-outline-primary{
+  --bs-btn-color: var(--uvm-red);
+  --bs-btn-border-color: var(--uvm-red);
+  --bs-btn-hover-bg: var(--uvm-red);
+  --bs-btn-hover-border-color: var(--uvm-red);
+  --bs-btn-active-bg: var(--uvm-red-600);
+  --bs-btn-active-border-color: var(--uvm-red-600);
+  --bs-btn-disabled-color: var(--uvm-red);
+  --bs-btn-disabled-border-color: var(--uvm-red);
+}
+
+/* Fondos / textos / bordes “primary” */
+.bg-primary{ background-color: var(--uvm-red) !important; }
+.text-primary{ color: var(--uvm-red) !important; }
+.border-primary{ border-color: var(--uvm-red) !important; }
+
+/* Links y pills activos */
+a, .link-primary{ color: var(--uvm-red) !important; }
+a:hover, .link-primary:hover{ color: var(--uvm-red-600) !important; }
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link{
+  background-color: rgba(255,255,255,.18) !important;
+  color:#fff !important;
+}
+
+/* Inputs: focus ring rojo sutil */
+.form-control:focus, .form-select:focus, .form-check-input:focus{
+  border-color: var(--uvm-red);
+  box-shadow: 0 0 0 .15rem rgba(204,0,0,.25);
+}
+
+/* Badges de estado */
+.badge-status{ font-weight:600; }
+.badge.approved{ background:#ecfdf5; color:#0e7a54; }
+.badge.proposed{ background:#eff6ff; color:#1d4ed8; }
+.badge.rejected{ background:#fef2f2; color:#991b1b; }
+
+/* ===== Login ===== */
+.auth-bg{
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(80% 60% at 80% 20%, rgba(204,0,0,.25), transparent 60%),
+    linear-gradient(180deg, #f6f7f9, #eef0f4);
+}
+.auth-card{ width:min(520px, 94%); }
+.auth-brand{ color: var(--uvm-red); }
+.auth-error.alert{ border-left: 4px solid var(--uvm-red); }
+
+/* Shake (credenciales inválidas) */
+@keyframes shake{
+  10%,90%{transform:translateX(-2px)}
+  20%,80%{transform:translateX(4px)}
+  30%,50%,70%{transform:translateX(-6px)}
+  40%,60%{transform:translateX(6px)}
+}
+.shake{animation:shake .55s both}
+
+/* ===== Sidebar ===== */
+.sb{
+  width: 268px; min-height:100vh;
+  background: linear-gradient(180deg, var(--uvm-red), var(--uvm-red-600));
+  color:#fff;
+}
+
+/* Logo bloque */
+.sb .brand{
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:.35rem; margin-bottom:.75rem;
+}
+.sb .brand img{ height:28px; }
+.sb .brand .uni{ font-size:.9rem; letter-spacing:.04em; color:#fff; opacity:.9; }
+
+/* Usuario */
+.sb .user{
+  display:flex; align-items:center; gap:.6rem;
+  padding-bottom: .85rem; margin-bottom: .85rem;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+}
+.sb .user .avatar{
+  width:42px; height:42px; border-radius:.75rem;
+  background:#fff; color:var(--uvm-red);
+  display:flex; align-items:center; justify-content:center;
+}
+.sb .user .name{ font-weight:600; line-height:1.1; }
+.sb .user .role{ color:rgba(255,255,255,.8); font-size:.85rem; }
+
+/* Navegación: más grandes y con presencia */
+.sb .nav{ gap:.25rem; }
+.sb .nav-link,
+.sb .nav-link:visited,
+.sb .nav-link:focus,
+.sb .nav-link:active{
+  color:#fff !important;
+}
+.sb .nav-link{
+  border-radius: .9rem;
+  padding: 1rem 1.1rem;
+  font-size: 1.05rem;
+  min-height: 48px;
+}
+.sb .nav-link .bi{ color:#fff !important; font-size: 1.25rem; margin-right:.6rem; }
+.sb .nav-link:hover{ background: rgba(255,255,255,.12); color:#fff !important; }
+.sb .nav-link.active{ background: rgba(255,255,255,.18); color:#fff !important; }
+
+/* Logout */
+.sb .logout{
+  background:#fff; color:var(--uvm-red);
+  border-radius: .9rem;
+}
+
+.skeleton{
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--sk-shadow) 0%,
+    var(--sk-base) 20%,
+    var(--sk-highlight) 40%,
+    var(--sk-base) 60%,
+    var(--sk-shadow) 100%
+  );
+  background-size: 200% 100%;
+  animation: sk-shimmer 1.15s linear infinite;
+  border-radius: 10px; /* feel moderno */
+}
+
+/* variantes útiles */
+.skeleton.rounded-sm { border-radius: 8px; }
+.skeleton.rounded-md { border-radius: 12px; }
+.skeleton.rounded-lg { border-radius: 16px; }
+.skeleton.circle     { border-radius: 999px; }
+
+/* desactiva animación si el usuario prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce){
+  .skeleton{ animation: none; background-position: 0 0; }
+}
+
+@keyframes sk-shimmer{
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Tipografía general */
+body{ color: var(--ink); }
+input.form-control, select.form-select, textarea.form-control{ font-size: 1rem; }

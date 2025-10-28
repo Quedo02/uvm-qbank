@@ -1,0 +1,18 @@
+{
+  "name": "uvm-qbank",
+  "private": true,
+  "scripts": {
+    "dev:api": "npm --prefix backend run dev",
+    "dev:web": "npm --prefix frontend run dev",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "seed": "npm --prefix backend run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "bootstrap": "5.3",
+    "bootstrap-icons": "^1.13.1",
+    "bootswatch": "5.3"
+  }
+}
