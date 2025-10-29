@@ -1,4 +1,4 @@
-# UVM QBank
+# UVM Banco de preguntas
 
 Banco de preguntas universitario (roles 1–5) con **React (Vite)** + **Node.js (Express)** + **Sequelize** + **MariaDB**.  
 UI con **Bootstrap 5** + **Bootswatch Zephyr** y paleta **rojo/blanco** (overrides).  
