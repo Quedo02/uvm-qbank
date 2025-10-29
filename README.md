@@ -73,7 +73,7 @@ MS_ENABLED=false
 
 ---
 
-🚀 Instalación rápida (Windows + XAMPP)
+## 🚀 Instalación rápida (Windows + XAMPP)
 
     Crea base de datos:
 
@@ -101,7 +101,7 @@ npm run dev
 # Web: http://localhost:3000
 # API: http://localhost:4444
 
-👥 Roles y permisos
+## 👥 Roles y permisos
 
     1 Admin / 2 Coordinador / 3 Docente TC: CRUD de materias, semestres y preguntas; aprobar/rechazar preguntas.
 
@@ -111,10 +111,11 @@ npm run dev
 
     Intentos: 1 intento; el docente habilita el examen (fecha/hora + duración).
 
-🗂️ Estados de preguntas
+## 🗂️ Estados de preguntas
 
 proposed · approved · rejected + comentario de revisión.
-🧭 Endpoints (resumen)
+
+## 🧭 Endpoints (resumen)
 
 Auth
 
@@ -139,7 +140,7 @@ DELETE /api/exams/:id
 
     Auditoría automática en create/update/approve/reject/delete.
 
-🎨 UI / Tema
+## 🎨 UI / Tema
 
     Bootswatch Zephyr como base y overrides en frontend/src/styles/overrides.css para fijar rojo como --bs-primary (botones, focus, estados disabled/active/hover).
 
@@ -149,7 +150,7 @@ DELETE /api/exams/:id
 
     Login de una columna, feedback de error con shake breve y alerta visible.
 
-🔔 Notas de íconos (Bootstrap Icons)
+## 🔔 Notas de íconos (Bootstrap Icons)
 
 Opción A (recomendada): instalar dentro de frontend/ y importar en src/main.jsx:
 
@@ -168,7 +169,8 @@ Opción B (CDN): agrega en frontend/public/index.html:
 
 Opción C: si decides servir fuentes fuera del root del proyecto, ajusta server.fs.allow en frontend/vite.config.js. (Ver docs de Vite).
 v3.vitejs.dev
-🧪 Scripts útiles
+
+## 🧪 Scripts útiles
 
 Desde la raíz:
 
@@ -177,7 +179,8 @@ npm --prefix backend run seed
 npm --prefix backend run reset-admin
 
 reset-admin vuelve a poner admin@uvm.local / admin123.
-🛟 Troubleshooting
+
+## 🛟 Troubleshooting
 
     --Credenciales para probar
     --Admin: admin@uvm.local / admin123
@@ -204,7 +207,7 @@ reset-admin vuelve a poner admin@uvm.local / admin123.
     Usa mysql2 (v6) o el dialecto dedicado (v7). Revisa compatibilidad si actualizas.
     sequelize.org+1
 
-🔐 Seguridad
+## 🔐 Seguridad
 
     No publiques .env.
 
@@ -212,7 +215,7 @@ reset-admin vuelve a poner admin@uvm.local / admin123.
 
     Habilita Microsoft SSO solo con credenciales válidas de Azure AD.
 
-📚 Referencias
+## 📚 Referencias
 
     Bootswatch Zephyr (tema):
     bootswatch.com+2bootswatch.com+2
@@ -232,7 +235,7 @@ reset-admin vuelve a poner admin@uvm.local / admin123.
     JSON Web Token (jsonwebtoken):
     npm
 
-📄 Licencia
+## 📄 Licencia
 
 Uso académico interno. Revisa licencias de terceros: Bootstrap/Bootswatch/Bootstrap Icons/Sequelize/jsonwebtoken.
 
