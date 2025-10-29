@@ -4,7 +4,7 @@ import { env } from './config/env.js';
 
 const start = async () => {
   await sequelize.authenticate();
-  await sequelize.sync({ alter: true }); // prototipo
+  await sequelize.sync();
   app.listen(env.port, () => console.log(`API on http://localhost:${env.port}`));
 };
 start();

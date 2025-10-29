@@ -71,6 +71,8 @@ MS_CLIENT_SECRET=
 MS_REDIRECT_URI=http://localhost:4444/api/auth/microsoft/callback
 MS_ENABLED=false
 
+---
+
 🚀 Instalación rápida (Windows + XAMPP)
 
     Crea base de datos:

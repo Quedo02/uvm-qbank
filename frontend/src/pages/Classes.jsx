@@ -113,7 +113,7 @@ export default function Classes() {
               <input className="form-control" value={className} readOnly placeholder="Selecciona Materia y Semestre" />
             </div>
             <div className="mb-4">
-              <label className="form-label">Dueño (docente)</label>
+              <label className="form-label">Docente</label>
               <select className="form-select" value={ownerId} onChange={e=>setOwner(e.target.value)} required>
                 <option value="">—</option>
                 {teachers.map(t => <option key={t.id} value={t.id}>{t.name} — {t.email}</option>)}
@@ -143,7 +143,7 @@ export default function Classes() {
                 <th role="button" onClick={()=>toggleSort('name')}>Clase {sort.key==='name' ? (sort.dir==='asc'?'▲':'▼') : ''}</th>
                 <th role="button" onClick={()=>toggleSort('subject')}>Materia {sort.key==='subject' ? (sort.dir==='asc'?'▲':'▼') : ''}</th>
                 <th role="button" onClick={()=>toggleSort('semester')}>Semestre {sort.key==='semester' ? (sort.dir==='asc'?'▲':'▼') : ''}</th>
-                <th role="button" onClick={()=>toggleSort('owner')}>Dueño {sort.key==='owner' ? (sort.dir==='asc'?'▲':'▼') : ''}</th>
+                <th role="button" onClick={()=>toggleSort('owner')}>Docente {sort.key==='owner' ? (sort.dir==='asc'?'▲':'▼') : ''}</th>
               </tr>
             </thead>
             <tbody>
