@@ -71,6 +71,7 @@ MS_CLIENT_SECRET=
 MS_REDIRECT_URI=http://localhost:4444/api/auth/microsoft/callback
 MS_ENABLED=false
 
+```
 ---
 
 ## 🚀 Instalación rápida (Windows + XAMPP)
@@ -100,6 +101,7 @@ npm --prefix backend run seed
 npm run dev
 # Web: http://localhost:3000
 # API: http://localhost:4444
+---
 
 ## 👥 Roles y permisos
 
@@ -110,10 +112,12 @@ npm run dev
     5 Estudiante: presenta exámenes de su clase.
 
     Intentos: 1 intento; el docente habilita el examen (fecha/hora + duración).
+---
 
 ## 🗂️ Estados de preguntas
 
-proposed · approved · rejected + comentario de revisión.
+    proposed · approved · rejected + comentario de revisión.
+---
 
 ## 🧭 Endpoints (resumen)
 
