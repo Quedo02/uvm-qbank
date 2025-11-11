@@ -180,3 +180,166 @@ a:hover, .link-primary:hover{ color: var(--uvm-red-600) !important; }
 /* Tipografía general */
 body{ color: var(--ink); }
 input.form-control, select.form-select, textarea.form-control{ font-size: 1rem; }
+
+/* evitar que inputs hagan overflow en celdas */
+.table td input.form-control,
+.table td select.form-control {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* estilo para truncado y mejor lectura */
+.table th, .table td {
+  vertical-align: middle;
+  padding: 0.6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* si quieres que al editar las filas aumente la altura pero sin overflow horizontal,
+   permite wrap dentro de inputs textareas: */
+.table td .multiline {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* columna id: justo el ancho necesario */
+.table th.id-col,
+.table td.id-col {
+  width: 72px !important;
+  max-width: 72px !important;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* evita que los botones se rompan en varias líneas */
+.table td .btn {
+  white-space: nowrap;
+}
+
+/* inputs/selects dentro de celdas respetan el ancho y no forzan el contenedor */
+.table td input.form-control,
+.table td select.form-control {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* asegurar que la columna acciones mantenga su ancho y no corte botones */
+.table th[style*="__actions"], .table td[style*="__actions"] {
+  white-space: nowrap;
+}
+
+/* Asegura espacio a la derecha de la última columna para que botones no se corten */
+.table td:last-child,
+.table th:last-child {
+  padding-right: 0.9rem; /* suficiente espacio antes del borde */
+}
+
+/* Reduce padding interno de botones en celdas para que quepan mejor */
+.table td .btn {
+  white-space: nowrap;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  padding-left: .45rem;
+  padding-right: .45rem;
+  font-size: 0.85rem; /* un pelín más pequeño para btn-sm dentro de tablas */
+}
+
+/* Si usas .btn-ghost personalizado y tiene padding mayor, ajustarlo */
+.btn-ghost.btn-sm {
+  padding: .25rem .45rem;
+}
+
+/* Asegura que la tabla responsive permita scroll cuando sea necesario,
+   pero preferiblemente el contenido quepa sin cortar. */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Evita que filas tengan overflow horizontal inesperado */
+.table th, .table td {
+  box-sizing: border-box;
+  min-width: 0; /* crucial para inputs y truncado */
+}
+
+/* Si quieres, fuerza que la última columna (acciones) no se reduzca demasiado */
+.table th.__actions, .table td.__actions {
+  white-space: nowrap;
+}
+
+/* Alternativa: si tu markup no añade clase __actions, aplica a la última celda.
+   (ya tenemos padding-right, esto es opcional) */
+.table td:last-child > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Acción: permitir overflow visible solo en la celda de acciones */
+.table td.cell-actions,
+.table th.cell-actions {
+  overflow: visible;     /* permitir que botones/ombers no se corten */
+  white-space: nowrap;
+  padding-right: 1rem;   /* espacio extra respecto al borde derecho */
+  box-sizing: border-box;
+}
+
+/* Asegurar que el contenedor interno de botones se alinee al centro/derecha */
+.table td.cell-actions > div {
+  display: inline-flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Dar prioridad visual a botones (evita que sombras o outlines se recorten) */
+.table td.cell-actions .btn {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mantener truncado en las demás celdas */
+.table th:not(.id-col):not(.cell-actions),
+.table td:not(.id-col):not(.cell-actions) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Buffer extra por si queda muy justo en pantallas pequeñas */
+@media (max-width: 720px) {
+  .table td.cell-actions,
+  .table th.cell-actions {
+    padding-right: 1.1rem;
+  }
+}
+
+/* Si la celda contiene botones o inputs, no recortes el contenido */
+.table td:has(.btn),
+.table td:has(.form-control),
+.table td:has(select.form-control),
+.table td.cell-editing,
+.table td.cell-actions {
+  overflow: visible;
+}
+
+/* Inputs y selects, ancho total dentro de celda */
+.table td input.form-control,
+.table td select.form-control {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Un poco más de aire para la última columna */
+.table th:last-child,
+.table td:last-child {
+  padding-right: 1rem;
+}

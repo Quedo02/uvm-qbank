@@ -3,15 +3,9 @@ import { useMemo, useState, useEffect } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 
 /**
- * Props:
- *  - columns: [{ header, accessor, cell?, key?, sortable?: true|false, editable?: true }]
- *  - rows: array
- *  - defaultSort: { accessor, direction }
- *  - actions?: { show?: boolean } // si false, no muestra columna acciones
- *  - onSave(rowId, newRow) => Promise|void
- *  - onDelete(rowId) => Promise|void
- *  - onEditStart(row) / onEditCancel(row)
+ * Table mejorada — ahora detecta columna id y la reduce.
  */
+
 export default function Table({
   columns = [],
   rows = [],
@@ -20,9 +14,8 @@ export default function Table({
   onSave,
   onDelete,
   onEditStart,
-  onEditCancel,
+  onEditCancel
 }) {
-  // helpers para paths 'a.b.c'
   const getValue = (row, accessor) => {
     if (!accessor) return undefined;
     if (typeof accessor === 'function') return accessor(row);
@@ -35,25 +28,20 @@ export default function Table({
     return v;
   };
   const setValue = (obj, accessor, value) => {
-    if (!accessor) return;
-    if (typeof accessor === 'function') {
-      // no podemos setear si accessor es función; el padre debería proporcionar cell/editor
-      return;
-    }
+    if (!accessor || typeof accessor === 'function') return;
     const parts = String(accessor).split('.');
     let cur = obj;
     for (let i = 0; i < parts.length; i++) {
       const p = parts[i];
-      if (i === parts.length - 1) {
-        cur[p] = value;
-      } else {
+      if (i === parts.length - 1) cur[p] = value;
+      else {
         if (cur[p] == null) cur[p] = {};
         cur = cur[p];
       }
     }
   };
 
-  // sorting (igual que tu original, con asc por defecto)
+  // sorting
   const initialSort = useMemo(() => {
     if (defaultSort && defaultSort.accessor) {
       return { accessor: defaultSort.accessor, direction: defaultSort.direction === 'desc' ? 'desc' : 'asc' };
@@ -100,19 +88,17 @@ export default function Table({
       return { accessor, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
     });
   };
-
   const renderSortIcon = (col) => {
     if (!sort || sort.accessor !== col.accessor) return null;
     return sort.direction === 'asc' ? <ChevronUp size={14} /> : <ChevronDown size={14} />;
   };
 
-  // edición inline: id de fila en edición y datos editados
+  // inline edit
   const [editingId, setEditingId] = useState(null);
   const [editedRow, setEditedRow] = useState(null);
 
   const startEdit = (row) => {
     setEditingId(row.id ?? null);
-    // clon profundo simple para editar sin mutar la original
     setEditedRow(JSON.parse(JSON.stringify(row || {})));
     if (onEditStart) onEditStart(row);
   };
@@ -122,7 +108,6 @@ export default function Table({
     if (onEditCancel) onEditCancel(row);
   };
   const handleChange = (accessor, value) => {
-    // modifica editedRow de forma inmutable
     setEditedRow(prev => {
       const copy = JSON.parse(JSON.stringify(prev || {}));
       setValue(copy, accessor, value);
@@ -131,20 +116,16 @@ export default function Table({
   };
   const handleSave = async () => {
     if (!editingId) return;
-    if (onSave) {
-      await onSave(editingId, editedRow);
-    }
+    if (onSave) await onSave(editingId, editedRow);
     setEditingId(null);
     setEditedRow(null);
   };
   const handleDelete = async (id) => {
     if (!id) return;
-    if (onDelete) {
-      await onDelete(id);
-    }
+    if (onDelete) await onDelete(id);
   };
 
-  // columnas efectivas: si actions.show true añadimos la columna Acciones al final
+  // build effective columns: add actions column if needed
   const effectiveColumns = useMemo(() => {
     const cols = [...columns];
     if (actions?.show !== false) {
@@ -153,20 +134,21 @@ export default function Table({
         key: '__actions',
         sortable: false,
         accessor: null,
+        width: '160px', // un poco más compacto
         cell: (row) => {
           const isEditing = editingId === (row.id ?? null);
           if (isEditing) {
             return (
-              <div style={{ display: 'inline-flex', gap: 6 }}>
-                <button className="btn btn-primary" onClick={handleSave}>Guardar</button>
-                <button className="btn btn-ghost" onClick={() => cancelEdit(row)}>Cancelar</button>
+              <div style={{ display:'flex', gap:8, whiteSpace:'nowrap', justifyContent:'flex-end', alignItems:'center', boxSizing:'border-box' }}>
+              <button className="btn btn-primary btn-sm" onClick={handleSave} style={{ padding: '0.25rem .5rem' }}>Guardar</button>
+                <button className="btn btn-ghost btn-sm" onClick={() => cancelEdit(row)} style={{ padding: '0.25rem .5rem' }}>Cancelar</button>
               </div>
             );
           }
           return (
-            <div style={{ display: 'inline-flex', gap: 6 }}>
-              <button className="btn btn-sm" onClick={() => startEdit(row)}>Editar</button>
-              <button className="btn btn-danger btn-sm" onClick={() => handleDelete(row.id)}>Eliminar</button>
+            <div style={{ display:'flex', gap:8, whiteSpace:'nowrap', justifyContent:'flex-end', alignItems:'center', boxSizing:'border-box' }}>
+              <button className="btn btn-sm" onClick={() => startEdit(row)} style={{ padding: '.25rem .5rem' }}>Editar</button>
+              <button className="btn btn-danger btn-sm" onClick={() => handleDelete(row.id)} style={{ padding: '.25rem .5rem' }}>Eliminar</button>
             </div>
           );
         }
@@ -175,23 +157,39 @@ export default function Table({
     return cols;
   }, [columns, actions, editingId, editedRow]);
 
+  // styles
+  const tableStyle = { width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse' };
+  const thStyleBase = { textAlign:'left', padding:'0.65rem', verticalAlign:'middle', textOverflow:'ellipsis', whiteSpace:'nowrap' };
+  const tdStyleBase = { padding:'0.6rem', verticalAlign:'middle', textOverflow:'ellipsis', whiteSpace:'nowrap', minWidth:0 };
+
   return (
-    <table className="table">
+    <table className="table" style={tableStyle}>
       <thead>
         <tr>
-          {effectiveColumns.map((c, i) => (
-            <th
-              key={c.key ?? c.accessor ?? i}
-              role={c.sortable === false ? undefined : 'button'}
-              onClick={() => onHeaderClick(c)}
-              style={{ cursor: c.sortable === false ? 'default' : 'pointer', userSelect: 'none' }}
-            >
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                <span>{c.header}</span>
-                <span style={{ display: 'inline-flex', alignItems: 'center' }}>{renderSortIcon(c)}</span>
-              </div>
-            </th>
-          ))}
+          {effectiveColumns.map((c, i) => {
+            const isId = (c.accessor === 'id' || c.key === 'id');
+            return (
+              <th
+                key={c.key ?? c.accessor ?? i}
+                role={c.sortable === false ? undefined : 'button'}
+                onClick={() => onHeaderClick(c)}
+                className={isId ? 'id-col' : undefined}
+                style={{
+                  ...thStyleBase,
+                  cursor: c.sortable === false ? 'default' : 'pointer',
+                  userSelect: 'none',
+                  width: c.width ?? (isId ? '72px' : undefined),
+                  maxWidth: c.width ?? (isId ? '72px' : undefined),
+                  textAlign: isId ? 'center' : undefined,
+                }}
+              >
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.header}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center' }}>{renderSortIcon(c)}</span>
+                </div>
+              </th>
+            );
+          })}
         </tr>
       </thead>
       <tbody>
@@ -200,40 +198,51 @@ export default function Table({
           return (
             <tr key={r.id ?? ri}>
               {effectiveColumns.map((c, ci) => {
-                // si la columna tiene cell, usarla — esto permite custom cells; si estamos en edición y la columna es editable:
+                const key = c.key ?? c.accessor ?? ci;
+                const isId = (c.accessor === 'id' || c.key === 'id');
+                const cellCommonStyle = {
+                  ...tdStyleBase,
+                  width: c.width ?? (isId ? '72px' : undefined),
+                  maxWidth: c.width ?? (isId ? '72px' : undefined),
+                  textAlign: isId ? 'center' : undefined,
+                };
+
                 if (c.key === '__actions' && typeof c.cell === 'function') {
-                  return <td key={c.key ?? ci}>{c.cell(r)}</td>;
+                  return <td key={key} style={{...cellCommonStyle, overflow:'visible'}} className="cell-actions">{c.cell(r)}</td>;
                 }
+
                 if (isEditing && c.editable) {
                   const val = getValue(editedRow, c.accessor);
-                  // input por defecto; si quieres selects/textarea, define cellEditor en la columna
                   if (c.cellEditor && typeof c.cellEditor === 'function') {
-                    // permite al padre pasar un componente editor personalizado
                     return (
-                      <td key={c.key ?? c.accessor ?? ci}>
-                        {c.cellEditor({
-                          value: val,
-                          onChange: (v) => handleChange(c.accessor, v),
-                          row: editedRow
-                        })}
+                      <td key={key} style={{...cellCommonStyle, overflow:'visible'}} className="cell-editing">
+                        <div style={{ minWidth: 0 }}>
+                          {c.cellEditor({
+                            value: val,
+                            onChange: (v) => handleChange(c.accessor, v),
+                            row: editedRow
+                          })}
+                        </div>
                       </td>
                     );
                   }
                   return (
-                    <td key={c.key ?? c.accessor ?? ci}>
+                    <td key={key} style={{...cellCommonStyle, overflow:'visible'}} className="cell-editing">
                       <input
-                        className="input"
+                        className="form-control"
                         value={val ?? ''}
                         onChange={(e) => handleChange(c.accessor, e.target.value)}
+                        style={{ width: '100%', boxSizing: 'border-box', minWidth: 0 }}
                       />
                     </td>
                   );
                 }
-                // modo normal (no edición)
+
                 if (typeof c.cell === 'function') {
-                  return <td key={c.key ?? c.accessor ?? ci}>{c.cell(r)}</td>;
+                  return <td key={key} style={cellCommonStyle}>{c.cell(r)}</td>;
                 }
-                return <td key={c.key ?? c.accessor ?? ci}>{getValue(r, c.accessor)}</td>;
+                const plain = getValue(r, c.accessor);
+                return <td key={key} style={cellCommonStyle} title={plain != null ? String(plain) : ''}>{plain}</td>;
               })}
             </tr>
           );

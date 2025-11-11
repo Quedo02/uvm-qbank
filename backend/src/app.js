@@ -16,7 +16,10 @@ app.use('/api', router);
 // Manejo de errores
 app.use((err, _req, res, _next) => {
   console.error(err);
-  res.status(500).json({ message: 'Error inesperado' });
+  const isProd = process.env.NODE_ENV === 'production';
+  res
+    .status(err.status || 500)
+    .json(isProd ? { message: 'Error inesperado' } : { message: err.message, stack: err.stack });
 });
 
 export { app };
