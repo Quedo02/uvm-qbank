@@ -47,6 +47,11 @@ export default function Sidebar({ user, onLogout }) {
             <i className="bi bi-people"></i> Clases
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink to="/users" className="nav-link">
+            <i className="bi bi-people"></i> Usuarios
+          </NavLink>
+        </li>
       </ul>
 
       {/* Logout */}

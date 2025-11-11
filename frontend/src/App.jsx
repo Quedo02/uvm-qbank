@@ -11,6 +11,7 @@ import Questions from './pages/Questions.jsx';
 import Exams from './pages/Exams.jsx';
 import ExamDetail from './pages/ExamDetail.jsx';
 import Classes from './pages/Classes.jsx';
+import Users from './pages/Users.jsx';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="exams" element={<Exams />} />
           <Route path="exams/:id" element={<ExamDetail />} />
           <Route path="classes" element={<Classes />} />
+          <Route path="users" element={<Users />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

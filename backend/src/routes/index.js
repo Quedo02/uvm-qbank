@@ -8,7 +8,7 @@ import { createQuestion, approveQuestion, updateQuestion, deleteQuestion, listQu
 import { createExam, publishExam, listExamsForClass, getExamForStudent, submitExam, listExams, getExamDetail } from '../controllers/examController.js';
 import { classAveragesCsv } from '../controllers/reportController.js';
 import { listClasses, createClass } from '../controllers/classController.js';
-import { listUsers } from '../controllers/userController.js';
+import { listUsers, deleteUsers, updateUsers } from '../controllers/userController.js';
 
 const r = Router();
 
@@ -34,6 +34,8 @@ r.post('/classes', auth, allowRoles(ROLES.ADMIN, ROLES.COORD, ROLES.DOC_TC), cre
 
 /* Usuarios (combos docentes) */
 r.get('/users', auth, allowRoles(ROLES.ADMIN, ROLES.COORD, ROLES.DOC_TC), listUsers);
+r.delete('/users/:id', auth, allowRoles(ROLES.ADMIN, ROLES.COORD, ROLES.DOC_TC), deleteUsers);
+r.put('/users/:id', auth, allowRoles(ROLES.ADMIN, ROLES.COORD, ROLES.DOC_TC), updateUsers);
 
 /* Preguntas */
 r.post('/questions', auth, allowRoles(ROLES.ADMIN, ROLES.COORD, ROLES.DOC_TC, ROLES.DOC_GNR), createQuestion);
